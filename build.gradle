@@ -1,0 +1,37 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    id 'base'
+    id 'idea'
+    id "org.jetbrains.kotlin.jvm" version "1.7.20" apply false
+}
+
+ext {
+    groovyMinorVersion = '3.0'
+    groovyVersion = "${groovyMinorVersion}.13"
+    lombokVersion = '1.18.24'
+    mockkVersion = '1.13.2'
+    spockVersion = "2.0-groovy-${groovyMinorVersion}"
+
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    group = 'at.martinahrer.tdd.samples'
+}
+
+subprojects {
+    apply from: "${rootDir}/gradle/module.gradle"
+
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+

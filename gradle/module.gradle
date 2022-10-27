@@ -1,0 +1,131 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20"
+        // required for reference to KotlinCompile
+    }
+}
+
+apply plugin: 'java-library'
+apply plugin: 'java-test-fixtures'
+apply plugin: 'groovy'
+apply plugin: 'org.jetbrains.kotlin.jvm'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+ext {
+    groovyMinorVersion = '3.0'
+    groovyVersion = "${groovyMinorVersion}.10"
+    spockVersion = "2.1-groovy-${groovyMinorVersion}"
+    lombokVersion = '1.18.22'
+}
+
+testing {
+    suites {
+        test {
+            useJUnitJupiter()
+        }
+        integrationTest(JvmTestSuite) {
+            dependencies {
+                implementation project
+            }
+
+            targets {
+                all {
+                    testTask.configure {
+                        shouldRunAfter(test)
+                    }
+                }
+            }
+        }
+        componentTest(JvmTestSuite) {
+            dependencies {
+                implementation project
+            }
+
+            targets {
+                all {
+                    testTask.configure {
+                        shouldRunAfter(test)
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+tasks.named('check') {
+    dependsOn(testing.suites.integrationTest)
+    dependsOn(testing.suites.componentTest)
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        freeCompilerArgs = ['-Xjsr305=strict']
+        jvmTarget = JavaVersion.VERSION_17
+    }
+}
+
+
+testing {
+    suites {
+        test {
+            useJUnitJupiter()
+            dependencies {
+                implementation("io.mockk:mockk:${mockkVersion}")
+
+                implementation (group: 'org.codehaus.groovy', name: 'groovy', version: groovyVersion)
+                implementation (project.dependencies.platform(group: 'org.spockframework', name: 'spock-bom', version: spockVersion))
+                implementation (group: 'org.spockframework', name: 'spock-core')
+
+                runtimeOnly (group: 'net.bytebuddy', name: 'byte-buddy', version:'1.11.0') // allows mocking of classes (in addition to interfaces)
+                runtimeOnly (group: 'org.objenesis', name:'objenesis', version: '3.2') // allows mocking of classes without default constructor (together with ByteBuddy or CGLIB)
+            }
+        }
+
+        integrationTest(JvmTestSuite) {
+            dependencies {
+                implementation project
+            }
+
+            targets {
+                all {
+                    testTask.configure {
+                        shouldRunAfter(test)
+                    }
+                }
+            }
+        }
+        componentTest(JvmTestSuite) {
+            dependencies {
+                implementation project
+            }
+
+            targets {
+                all {
+                    testTask.configure {
+                        shouldRunAfter(test)
+                    }
+                }
+            }
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn(testing.suites.integrationTest)
+    dependsOn(testing.suites.componentTest)
+}
+
+
+dependencies {
+    implementation('org.jetbrains.kotlin:kotlin-bom')
+    implementation('org.jetbrains.kotlin:kotlin-reflect')
+    implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk8')
+}
