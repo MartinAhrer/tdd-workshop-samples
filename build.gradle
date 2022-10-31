@@ -8,6 +8,7 @@ plugins {
     id 'base'
     id 'idea'
     id "org.jetbrains.kotlin.jvm" version "1.7.20" apply false
+    id 'org.springframework.boot' version '2.7.5'
 }
 
 ext {
@@ -16,7 +17,6 @@ ext {
     lombokVersion = '1.18.24'
     mockkVersion = '1.13.2'
     spockVersion = "2.0-groovy-${groovyMinorVersion}"
-
 }
 
 allprojects {
@@ -29,6 +29,13 @@ allprojects {
 
 subprojects {
     apply from: "${rootDir}/gradle/module.gradle"
+    apply plugin: 'io.spring.dependency-management'
+
+    dependencyManagement {
+        imports {
+            mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+        }
+    }
 
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17

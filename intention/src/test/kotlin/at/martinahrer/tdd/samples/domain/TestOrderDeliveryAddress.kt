@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 /**
  * Test that demonstrates how modifying an implementation detail can break 100's of tests and cause an update of all that tests'
  */
-class TestOrderProcessing {
+class TestOrderDeliveryAddress {
     companion object {
         private const val expectedLine1 = "Line 1"
         private const val expectedLine2 = "Line 2"

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 
-class TestOrderProcessingWithFactory {
+class TestOrderDeliveryAddressWithFactory {
     companion object {
         @Test
         fun testOrderProcessing(): Unit {
@@ -23,7 +23,7 @@ class TestOrderProcessingWithFactory {
             assertTrue(actualResult.contains(expectedLine1))
             assertTrue(actualResult.contains(expectedLine2))
             assertTrue(actualResult.contains(expectedCity))
-            assertTrue(actualResult.contains(expectedZip))
+            assertTrue(actualResult.contains (expectedZip))
         }
     }
 }

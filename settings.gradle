@@ -1,4 +1,5 @@
 
 rootProject.name = "tdd-samples"
 
-include("expressiveness")
+include("domain")
+include("intention")
