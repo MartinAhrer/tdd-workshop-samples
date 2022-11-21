@@ -60,17 +60,6 @@ Their usability is a bit limited since these methods are not public and somehow 
 include::../domain/src/testFixtures/java/at/martinahrer/tdd/sample/domain/impl/SlowAndFlakyInMemoryOrderRepository.java[tag=factory-methods]
 ----
 
-Extract the methods for creating an order into a new class `OrderFactory` and the methods for the `OrderPosition` to new class `OrderPositionFactory`.
+Replace the methods for creating an order by `OrderFactory` and the methods for the `OrderPosition` by class `OrderPositionFactory`.
 
-Implement these classes in a Gradle source set for https://docs.gradle.org/current/userguide/java_testing.html#sec:java_test_fixtures[test fixtures]. The factory methods should not be static methods.
-
-TIP: try to use composition such that the order factory is using the order position factory to create an order including some order positions.
-
-.Sample usage of the factories
-[source,java]
-----
-Order order = new OrderFactory.create(...);
-OrderPosition position = new OrderPositonFactory.create(...);
-----
-
-Use those factories for the mocked tests of the previous section to create the objects of the repository response.
+These classes are implemented in a Gradle source set for https://docs.gradle.org/current/userguide/java_testing.html#sec:java_test_fixtures[test fixtures]. The factory methods should not be static methods.

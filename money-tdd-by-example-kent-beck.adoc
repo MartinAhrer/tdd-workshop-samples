@@ -10,7 +10,7 @@
 
 Following the TDD paradigm we start with a test.
 
-.Patch file (Click to see difference)
+.Add test (Click to see difference)
 [%collapsible]
 ====
 [source,java]
