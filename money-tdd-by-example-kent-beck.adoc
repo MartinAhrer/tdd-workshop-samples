@@ -1,0 +1,203 @@
+:toc: left
+
+
+= Transcript
+
+:seq1: {counter:seq1}
+== Iteration {seq1}: Multiplication (make it work)
+
+===  Use the IDE to complete unknown elements
+
+Following the TDD paradigm we start with a test.
+
+.Patch file (Click to see difference)
+[%collapsible]
+====
+[source,java]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/patch/184-e2b7d7ec773976c5ec1c18b84b0140fbc6350851.patch[]
+----
+====
+
+.Checkout code
+[%collapsible]
+====
+[source,bash]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/184.sh[]
+----
+====
+
+=== Learning to walk the smallest steps possible
+
+We only create all unknown classes and members using the IDE's code completion features.
+
+IMPORTANT: It really pays off to learn a few keyboard shortcut
+
+.Add class `Dollar` (Click to see difference)
+[%collapsible]
+====
+[source,java]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/patch/182-3faa0122817b29874c81187577eb6baaba9a8fff.patch[]
+----
+====
+
+.Add constructor `Dollar` (Click to see difference)
+[%collapsible]
+====
+[source,java]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/patch/181-9109925ae5ca3249a846b3e8e317a33074669550.patch[]
+----
+====
+
+.Add method `times()` (Click to see difference)
+[%collapsible]
+====
+[source,java]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/patch/180-579a43718809f356168276217a9c4e5fbb7bb4dc.patch[]
+----
+====
+
+.Add field `amount` (Click to see difference)
+[%collapsible]
+====
+[source,java]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/patch/179-86f3b0ca0ae55f96a812849ff045298f460040c9.patch[]
+----
+====
+
+
+.Field amount (Click to see difference)
+[%collapsible]
+====
+[source,java]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/patch/178-212bca7f3bdf048a69cebaa6274c9b9e3467eb77.patch[]
+----
+====
+
+.Field amount (Click to see difference)
+[%collapsible]
+====
+[source,java]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/patch/177-e70321fa42da6bbd6e68150fa56cba449a903934.patch[]
+----
+====
+
+.Field amount (Click to see difference)
+[%collapsible]
+====
+[source,java]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/patch/176-b690daa0f6531791f9e5d7d997ccaeda7325c781.patch[]
+----
+====
+
+.Field amount (Click to see difference)
+[%collapsible]
+====
+[source,java]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/patch/175-c1502059c157d5b3df065f24e2dd315b064721fa.patch[]
+----
+====
+
+
+.Field amount (Click to see difference)
+[%collapsible]
+====
+[source,java]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/patch/174-4c75f86102c1d6dbfc5185674d21faa19cd8fb4e.patch[]
+----
+====
+
+.Field amount (remove duplication, refactoring) (Click to see difference)
+[%collapsible]
+====
+[source,java]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/patch/173-9cd51587df95ff89064b46a7f0b9e923edc15d8a.patch[]
+----
+====
+
+.Checkout code
+[%collapsible]
+====
+[source,bash]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/173.sh[]
+----
+====
+
+=== Summary
+
+Three strategies are known for getting a test to go green:
+
+* Fake it till you make it by returning a constant and replacing it by variables step by step until you have the real code.
+* Use obvious implementation - just type the real implementation. Once you are certain about your solution and know your tests are covering you, you can just take that approach.
+* Triangulation
+
+IMPORTANT: When taking steps too big we may forget important tests to add while we go forward too fast.
+
+In this section we have practiced that sometimes we can go very slow. But in fact this has been a bit exaggerated slow here.
+
+:seq1: {counter:seq1}
+== Iteration {seq1}: Multiplication (make it clean code)
+
+.Dollar side effect (Add test) (Click to see difference)
+[%collapsible]
+====
+[source,java]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/patch/170-67cd332d2ad2d2f0dca1e662f1ad9fa3ad3fe5eb.patch[]
+----
+====
+
+
+.Dollar side effect (Adjust test) (Click to see difference)
+[%collapsible]
+====
+[source,java]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/patch/169-f1817f98b62385b29179145820bff87c229eba9b.patch[]
+----
+====
+
+.Dollar side effect (Work on implementation) (Click to see difference)
+[%collapsible]
+====
+[source,java]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/patch/168-c0be96303e8dd9d5f71816230c016e4717ead0fa.patch[]
+----
+====
+
+IMPORTANT: we can use the IDE's code completion to make the test code compile.
+
+.Dollar side effect (Work on implementation) (Click to see difference)
+[%collapsible]
+====
+[source,java]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/patch/167-ce06bf75272695911e251dd984cd8016e13e5019.patch[]
+----
+====
+
+.Checkout code
+[%collapsible]
+====
+[source,bash]
+----
+include::{docdir}/money-tdd-by-example-kent-beck/build/167.sh[]
+----
+====
+
+=== Summary
+
+After we have tried to find a working solution as quick as possible, we finally do some refactoring and get a clean solution.

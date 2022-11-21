@@ -1,0 +1,3 @@
+[submodule "money-tdd-by-example-kent-beck"]
+	path = money-tdd-by-example-kent-beck
+	url = https://github.com/MartinAhrer/money-tdd-by-example-kent-beck.git

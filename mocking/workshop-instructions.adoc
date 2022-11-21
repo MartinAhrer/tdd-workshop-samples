@@ -1,0 +1,76 @@
+= Workshop Instructions
+
+== Dealing with a slow and flaky external component
+
+Implement a test class starting with the template show below.
+That test should verify that the `OrderServiceImpl.printDeliveryLabel(orderId)` method builds an address label text for some order delivery.
+That label should contain the text `"Zip"`, `"City"`, `"Line 1"`, and `"Line2"`.
+
+The order service has a dependency on `OrderRepository` for which an implementation is provided by `SlowAndFlakyInMemoryOrderRepository`.
+
+IMPORTANT: Whatever effects you experience with that implementation, you are not supposed to modify this implementation.
+
+[source,java]
+----
+package at.martinahrer.tdd.samples.service;
+
+public class OrderServiceDeliveryAddressTest {
+
+    @Test
+    public void testOrderDeliveryAddress() {
+        // TODO
+    }
+}
+----
+
+Run the implemented test directly or using the provided test suite class `OrderServiceDeliveryAddressTestSuite` that simulates multiple test implementations using your test class.
+
+
+== Mocking an external component
+
+For the previous assignment you have experienced that the repository is slow and flaky (it fails randomly like we have to expect it for external dependencies).
+
+Replace the SlowAndFlakyInMemoryOrderRepository by a mocked `OrderRepository`. Use https://site.mockito.org/[Mockito] to mock the service's interaction with the repository.
+
+[source,java]
+----
+package at.martinahrer.tdd.samples.service;
+
+import org.junit.jupiter.api.Test;
+
+public class OrderServiceDeliveryAddressTestWithMockito {
+
+    @Test
+    public void testOrderDeliveryAddress() {
+        // TODO
+    }
+}
+----
+
+Run the implemented test directly or using the provided test suite class `OrderServiceDeliveryAddressTestWithMockitoSuite` that simulates multiple test implementations using your test class.
+
+== Setup testFixtures and implement a shareable data factory
+
+The class `SlowAndFlakyInMemoryOrderRepository` includes some methods for creating objects of type `Order` and `OrderPosition` that are required for testing.
+Their usability is a bit limited since these methods are not public and somehow tied to the repository class.
+
+.Helper methods in `SlowAndFlakyInMemoryOrderRepository`
+[source,java]
+----
+include::../domain/src/testFixtures/java/at/martinahrer/tdd/sample/domain/impl/SlowAndFlakyInMemoryOrderRepository.java[tag=factory-methods]
+----
+
+Extract the methods for creating an order into a new class `OrderFactory` and the methods for the `OrderPosition` to new class `OrderPositionFactory`.
+
+Implement these classes in a Gradle source set for https://docs.gradle.org/current/userguide/java_testing.html#sec:java_test_fixtures[test fixtures]. The factory methods should not be static methods.
+
+TIP: try to use composition such that the order factory is using the order position factory to create an order including some order positions.
+
+.Sample usage of the factories
+[source,java]
+----
+Order order = new OrderFactory.create(...);
+OrderPosition position = new OrderPositonFactory.create(...);
+----
+
+Use those factories for the mocked tests of the previous section to create the objects of the repository response.

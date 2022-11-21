@@ -18,20 +18,28 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-ext {
-    groovyMinorVersion = '3.0'
-    groovyVersion = "${groovyMinorVersion}.10"
-    spockVersion = "2.1-groovy-${groovyMinorVersion}"
-    lombokVersion = '1.18.22'
-}
-
 testing {
     suites {
         test {
             useJUnitJupiter()
+            dependencies {
+                // https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-bom
+                implementation (project.dependencies.platform (group: 'org.codehaus.groovy', name: 'groovy-bom', version: groovyVersion))
+                implementation (group: 'org.codehaus.groovy', name: 'groovy')
+                implementation (project.dependencies.platform(group: "org.spockframework", name: 'spock-bom', version: spockVersion))
+                implementation (group: 'org.spockframework', name: 'spock-core')
+
+                implementation("io.mockk:mockk:${mockkVersion}")
+
+                runtimeOnly (group: 'net.bytebuddy', name: 'byte-buddy', version:'1.11.0') // allows mocking of classes (in addition to interfaces)
+                runtimeOnly (group: 'org.objenesis', name:'objenesis', version: '3.2') // allows mocking of classes without default constructor (together with ByteBuddy or CGLIB)
+
+                implementation (group: 'org.junit.jupiter', name:'junit-jupiter', version: junitJupiterVersion)
+            }
         }
         integrationTest(JvmTestSuite) {
             dependencies {
+                implementation (group: 'org.junit.jupiter', name:'junit-jupiter', version: junitJupiterVersion)
                 implementation project
             }
 
@@ -71,56 +79,6 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     }
 }
 
-
-testing {
-    suites {
-        test {
-            useJUnitJupiter()
-            dependencies {
-                implementation("io.mockk:mockk:${mockkVersion}")
-
-                implementation (group: 'org.codehaus.groovy', name: 'groovy', version: groovyVersion)
-                implementation (project.dependencies.platform(group: 'org.spockframework', name: 'spock-bom', version: spockVersion))
-                implementation (group: 'org.spockframework', name: 'spock-core')
-
-                runtimeOnly (group: 'net.bytebuddy', name: 'byte-buddy', version:'1.11.0') // allows mocking of classes (in addition to interfaces)
-                runtimeOnly (group: 'org.objenesis', name:'objenesis', version: '3.2') // allows mocking of classes without default constructor (together with ByteBuddy or CGLIB)
-            }
-        }
-
-        integrationTest(JvmTestSuite) {
-            dependencies {
-                implementation project
-            }
-
-            targets {
-                all {
-                    testTask.configure {
-                        shouldRunAfter(test)
-                    }
-                }
-            }
-        }
-        componentTest(JvmTestSuite) {
-            dependencies {
-                implementation project
-            }
-
-            targets {
-                all {
-                    testTask.configure {
-                        shouldRunAfter(test)
-                    }
-                }
-            }
-        }
-    }
-}
-
-tasks.named('check') {
-    dependsOn(testing.suites.integrationTest)
-    dependsOn(testing.suites.componentTest)
-}
 
 
 dependencies {

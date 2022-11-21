@@ -3,3 +3,4 @@ rootProject.name = "tdd-samples"
 
 include("domain")
 include("intention")
+include("mocking")
