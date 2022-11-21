@@ -30,14 +30,16 @@ public class SlowAndFlakyInMemoryOrderRepository implements OrderRepository {
     }
 
     private static void simulateDatabaseQueryFail() {
-        var remainder=RandomUtils.nextInt(1, 100) % 7;
-        if (remainder==0) {
-            throw new RuntimeException("The database query could not be executed. Seems the database is down!");
+        if (System.getenv("NO_FLAKYNESS") == null) {
+            var remainder = RandomUtils.nextInt(1, 100) % 7;
+            if (remainder == 0) {
+                throw new RuntimeException("The database query could not be executed. Seems the database is down!");
+            }
         }
     }
 
 
-// tag::factory-methods[]
+    // tag::factory-methods[]
     public static Order newOrder(Long id) {
         var quantity = 5;
         var price = 10;

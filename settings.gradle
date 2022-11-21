@@ -1,5 +1,5 @@
 
-rootProject.name = "tdd-samples"
+rootProject.name = "tdd-workshop-samples"
 
 include("domain")
 include("intention")
